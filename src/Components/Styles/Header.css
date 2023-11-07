@@ -1,0 +1,31 @@
+.grid .Logo{
+    font-size: 1.8rem;
+    color: red;
+    font-weight: bold;
+}
+.grid .links{
+    margin-left: 2%;
+}
+.grid .links .button{
+    text-decoration: none;
+}
+.grid .links .active .MuiButton-text{
+    color: red;
+    font-weight: bold;
+}
+.grid .links .MuiButton-text, .search .MuiButton-text{
+    color: #fff;
+    font-size: 0.65rem;
+}
+.header{
+    background-color: rgba(0, 0, 0, 0.445);
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.445);
+}
+.grid .links .button:hover{
+    border-bottom: 2px solid #fff;
+    border-radius: 0;
+}
+.MuiMenu-list{
+    background-color: #252525;
+    color: #fff;
+}
