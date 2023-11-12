@@ -1,14 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 .body{
     object-fit: cover;
     background-size: cover;
     color: #fff;
     box-shadow: inset 10px 10px 30px rgba(0, 0, 0, 0.822);
+    background-color: rgba(0, 0, 0, 0.270);
 }
 .body .title{
-    height: 90%;
+    height: 100%;
     padding: 0 35px;
     display: grid;
-    grid-template-columns: 40% 10%;
+    grid-template-columns: 50% 10%;
     justify-content: space-between;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.270);
@@ -30,6 +32,7 @@
 }
 .body .title .right .description h1{
     text-align: center;
+    margin-top: 17%;
 }
 .body .title .right .button_footer{
     display: flex;
@@ -39,14 +42,12 @@
     margin-bottom: 15%;
 }
 .body .title .right .description p{
-    font-size: 0.8rem;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.9px;
+    font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
+    width: 80%;
 }
 .body .title .right .description h1{
-    font-family: 'Roboto';
-    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
     font-size: 3.2rem;
 }
 .body .title .right .button_footer .MuiButton-outlined{
