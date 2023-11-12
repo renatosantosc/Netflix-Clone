@@ -1,9 +1,11 @@
-import axios from 'axios'
-import '../App.css'
-import './Styles/Home.css'
+import axios from 'axios';
+import '../App.css';
+import './Styles/Home.css';
 import { useState, useEffect } from 'react';
 import Header from '../Components/Header';
-import { Box, Button, Modal } from '@mui/material'
+import Modal from '../Components/Modal';
+import Slider from '../Components/Slides'
+import { Box, Button } from '@mui/material'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
 import '@fontsource/roboto/300.css'
@@ -15,6 +17,7 @@ import '@fontsource/roboto/700.css'
 export default function Home(){
 
   const [dataMovie, setDataMovie] = useState()
+  const [discover, setDiscover] = useState()
   const [back, setBack] = useState()
   const [avatar, setAvatar] = useState()
   const [open, setOpen] = useState(false)
@@ -31,11 +34,11 @@ export default function Home(){
   };
 
   const handleOpen = () =>{
-    setOpen(true)
     axios
     .request(video)
     .then(function (response) {
       setVideoURL(response.data)
+      setOpen(true)
     })
     .catch(function (error) {
       console.error(error);
@@ -46,7 +49,16 @@ export default function Home(){
     const imageURL = 'https://image.tmdb.org/t/p/original';
     const options = {
       method: 'GET',
-      url: 'https://api.themoviedb.org/3/movie/now_playing?language=pt-BR&page=1',
+      url: 'https://api.themoviedb.org/3/trending/movie/week?language=pt-BR',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
+      }
+    };
+
+    const discover_movie = {
+      method: 'GET',
+      url: 'https://api.themoviedb.org/3/trending/tv/week?language=pt-BR',
       headers: {
         accept: 'application/json',
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
@@ -57,31 +69,45 @@ export default function Home(){
     .request(options)
     .then(function (response) {
       setDataMovie(response.data)
-      setBack(imageURL + dataMovie.results[4].backdrop_path)
+      setBack(imageURL + dataMovie.results[3].backdrop_path)
       setAvatar(imageURL + dataMovie.results[0].poster_path)
-      setIdVideo(dataMovie.results[4].id)
+      setIdVideo(dataMovie.results[3].id)
     })
     .catch(function (error) {
       console.error(error);
     });
-  },[dataMovie])
+
+    axios
+    .request(discover_movie)
+    .then(function (response) {
+      setDiscover(response.data)
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+
+  },[dataMovie, discover])
 
     return(
-        <Box className='body' width={'100vw'} height={'95vh'} sx={{backgroundImage: `url(${back})`}}>
+      <>
+        <Box className='body' width={'100vw'} height={'85vh'} sx={{backgroundImage: `url(${back})`}}>
             <Header avatar={avatar} />
+            {videoURL ? 
+              <Modal setOpen={setOpen} open={open} id={videoURL.results[0].key} />
+            : '' }
             <div className='title'>
               <div className='right'>
                 {dataMovie ?
                   <div className='description'>  
-                    <h1>{dataMovie.results[4].title}</h1>
-                    <p>{dataMovie.results[4].overview}</p>   
+                    <h1>{dataMovie.results[3].title}</h1>
+                    <p>{dataMovie.results[3].overview}</p>   
                   </div>
                 : ''}
 
                   <div className='button_footer'>
-                    <Button variant='outlined' startIcon={ <PlayArrowIcon /> }>
-                      Assitir
-                    </Button>
+                  <Button variant='outlined' onClick={handleOpen} startIcon={ <PlayArrowIcon /> }>
+                    Trailer
+                  </Button>
 
                     <Button variant='contained' startIcon={ <AddIcon /> }>
                       Minha Lista
@@ -90,14 +116,18 @@ export default function Home(){
               </div>
 
                 <div className='left'>
-                  {videoURL ?
-                    <iframe src={`https://www.youtube.com/embed/${videoURL.results[0].key}`}/>
-                  : ''}
-                  <Button variant='contained' onClick={handleOpen} startIcon={ <PlayArrowIcon /> }>
-                    Trailer
-                  </Button>
+                  
                 </div>
-            </div>
+
+            </div> 
         </Box>
+        {dataMovie ? 
+          <Slider movies={dataMovie.results} title='Filmes em alta' />
+        : '' }
+
+        {discover ? 
+          <Slider movies={discover.results} title='Séries em alta' />
+        : '' }
+      </>    
     )
 }
