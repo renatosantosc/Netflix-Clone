@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+.box ul{
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    list-style: none;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    transition: 0.4s ease;
+}
+.box ul li .card{
+    object-fit: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #030303;
+    transition: 0.4s ease;
+}
+.box ul li .card:hover{
+    transform: scale(1.1);
+    z-index: 10;
+}
+.box{
+    background-color: #030303;
+}
+.box ul::-webkit-scrollbar{
+    height: 5px;
+    padding-bottom: 20px;
+    cursor: pointer;
+}
+.box ul::-webkit-scrollbar-thumb{
+    background-color: transparent;
+}
+.box ul:hover::-webkit-scrollbar-thumb{
+    background-color: red;
+}
+.box .button{
+    position: relative;
+    top: -150px;
+    left: 0;
+    width: 98%;
+    height: 15px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    z-index: 11;
+}
+.box .button .buttons{
+    color: white;
+    background-color: #03030396;
+    height: 50px;
+}
+.box span{
+    color: white;
+    margin-left: 2%;
+    margin-top: 1%;
+    font-size: 1.2rem;
+    font-family: 'Poppins', sans-serif;
+}
+.box ul li .card .play, .box ul li .card .play .MuiButton-contained{
+    display: none;
+}
+.box ul li .card:hover .play{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.308);
+    border-radius: 6px;
+    transition: 0.4s ease;
+}
+.box ul li .card:hover .play .MuiButton-contained{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.534);
+    color: #fff;
+    transition: 0.4s ease;
+}
