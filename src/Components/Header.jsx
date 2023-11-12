@@ -17,6 +17,7 @@ import '@fontsource/roboto/700.css'
 
 export default function Header(props){
     const [anchorEl, setAnchorEl] = useState(null)
+    const [height, setHeight] = useState(null)
     const open = Boolean(anchorEl)
     const handleClick = e =>{
         setAnchorEl(e.currentTarget)
@@ -24,10 +25,18 @@ export default function Header(props){
     const handleClose = () =>{
         setAnchorEl(null)
     }
+    const view_Height = () =>{
+        setHeight(window.scrollY)
+    }
+    setInterval(view_Height, 1000)
 
     return(
         <div className='header'>
-            <Grid container alignItems={'center'} width={'100%'} height={'10vh'} sx={{padding: '0px 35px'}}>
+            <Grid className='container' container alignItems={'center'} width={'100%'} height={'10vh'} 
+            sx={{
+                padding: '0px 35px',
+                backgroundColor: height > 0 ? 'black' : 'rgba(0, 0, 0, 0.445)'
+                }}>
                 <Grid item lg={6} md={6} sm={6} xs={6} className='grid' 
                 sx={{
                     display: 'flex', 
