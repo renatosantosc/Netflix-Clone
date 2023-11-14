@@ -3,7 +3,7 @@
     object-fit: cover;
     background-size: cover;
     color: #fff;
-    box-shadow: inset 10px 10px 30px rgba(0, 0, 0, 0.822);
+    box-shadow: inset 10px -25px 30px rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.270);
 }
 .body .title{
@@ -14,7 +14,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.270);
-    box-shadow: 0px 40px 40px rgba(0, 0, 0, 0.822);
+    box-shadow: 10px 10px 30px rgb(0, 0, 0);
 }
 .body .title .right{
     display: grid;
