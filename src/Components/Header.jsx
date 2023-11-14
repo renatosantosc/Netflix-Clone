@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import { Grid, Button, Avatar, Menu, MenuItem } from "@mui/material";
 import NotificationIcon from '@mui/icons-material/Notifications'
 import CreateSharpIcon from '@mui/icons-material/CreateSharp'
@@ -18,6 +19,8 @@ import '@fontsource/roboto/700.css'
 export default function Header(props){
     const [anchorEl, setAnchorEl] = useState(null)
     const [height, setHeight] = useState(null)
+    const [dataMovie, setDataMovie] = useState()
+    const [avatar, setAvatar] = useState()
     const open = Boolean(anchorEl)
     const handleClick = e =>{
         setAnchorEl(e.currentTarget)
@@ -29,6 +32,29 @@ export default function Header(props){
         setHeight(window.scrollY)
     }
     setInterval(view_Height, 1000)
+
+    useEffect(() => {
+        const imageURL = 'https://image.tmdb.org/t/p/original';
+        const options = {
+        method: 'GET',
+        url: 'https://api.themoviedb.org/3/trending/movie/week?language=pt-BR',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
+        }
+        };
+
+        axios
+        .request(options)
+        .then(function (response) {
+        setDataMovie(response.data)
+        setAvatar(imageURL + dataMovie.results[0].poster_path)
+        })
+        .catch(function (error) {
+        console.error(error);
+        });
+
+    },[dataMovie])
 
     return(
         <div className='header'>
@@ -78,7 +104,7 @@ export default function Header(props){
                         aria-expanded={open ? 'true' : undefined}
                         onClick={handleClick}
                     >
-                        <Avatar variant='rounded' alt='Five night' src={props.avatar} />
+                        <Avatar variant='rounded' alt='Five night' src={avatar} />
                     </Button>
                     <Menu
                         id='basic-menu'
