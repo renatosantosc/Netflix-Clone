@@ -3,6 +3,7 @@ import Home from '../Pages/Home'
 import Series from '../Pages/Series'
 import Film from '../Pages/Film'
 import Popping from '../Pages/Popping'
+import ViewMovie from '../Pages/ViewMovie'
 
 export default function MyRoutes(){
     return(
@@ -12,6 +13,7 @@ export default function MyRoutes(){
                 <Route path='/Séries' element={ <Series /> } />
                 <Route path='/Filmes' element={ <Film /> } />
                 <Route path='/Bombando' element={ <Popping /> } />
+                <Route path='/Assistir/:id' element={ <ViewMovie /> } />
             </Routes>
         </BrowserRouter>
     )
