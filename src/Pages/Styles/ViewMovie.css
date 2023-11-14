@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+.container .grid{
+    height: 80vh;
+    grid-template-columns: 35% 65%;
+    justify-content: center;
+    align-items: center;
+}
+.container .grid .rigth{
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    box-shadow: inset 20px -25px 20px black;
+}
+.container .grid .left{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+}
+.container .grid .left p{
+    font-size: 0.8rem;
+    text-align: center;
+    letter-spacing: 1.1px;
+    font-weight: 200;
+    word-spacing: 0.7px;
+}
+.container .grid .left h1{
+    font-size: 2.1rem;
+    text-align: center;
+    font-weight: 700;
+}
