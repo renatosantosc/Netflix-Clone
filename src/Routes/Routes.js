@@ -13,7 +13,7 @@ export default function MyRoutes(){
                 <Route path='/Séries' element={ <Series /> } />
                 <Route path='/Filmes' element={ <Film /> } />
                 <Route path='/Bombando' element={ <Popping /> } />
-                <Route path='/Assistir/:id' element={ <ViewMovie /> } />
+                <Route path='/Assistir/:name/:id' element={ <ViewMovie /> } />
             </Routes>
         </BrowserRouter>
     )
