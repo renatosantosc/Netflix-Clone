@@ -1,25 +1,30 @@
-import { Box, Grid, Button } from '@mui/material'
+import { Box, Grid, Button, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import axios from 'axios'
 import './Styles/ViewMovie.css'
 import Modal from '../Components/Modal'
 import Header from '../Components/Header'
-import { PlayArrowIcon} from '@mui/icons-material/'
-import { AddIcon} from '@mui/icons-material/'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import AddIcon from '@mui/icons-material/Add'
 
 export default function ViewMovie(){
 
     const [dateMovie, setDateMovie] = useState(null)
     const [open, setOpen] = useState(false)
     const [key, setKey] = useState(null)
+    const [release, setRelease] = useState(null)
+    const [releaseMovie, setReleaseMovie] = useState(null)
+    const [minute, setMinute] = useState(null)
+    const [hours, setHours] = useState(null)
+    const [found, setFound] = useState(null)
     const imageURL = 'https://image.tmdb.org/t/p/original';
-    const { id } = useParams()
+    const { id, name } = useParams()
 
     const openVideo = () =>{
         const video = {
             method: 'GET',
-            url: `https://api.themoviedb.org/3/movie/${id}/videos?language=pt-BR&page=1`,
+            url: `https://api.themoviedb.org/3/${name}/${id}/videos?language=pt-BR&page=1`,
             headers: {
               accept: 'application/json',
               Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
@@ -40,7 +45,16 @@ export default function ViewMovie(){
       useEffect(() =>{
         const movie = {
             method: 'GET',
-            url: `https://api.themoviedb.org/3/movie/${id}?language=pt-BR`,
+            url: `https://api.themoviedb.org/3/${name}/${id}?language=pt-BR`,
+            headers: {
+              accept: 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
+            }
+          };
+
+          const release_movie = {
+            method: 'GET',
+            url: `https://api.themoviedb.org/3/${name}/${id}/release_dates`,
             headers: {
               accept: 'application/json',
               Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
@@ -51,12 +65,29 @@ export default function ViewMovie(){
         .request(movie)
         .then(function (response) {
         setDateMovie(response.data)
+        const movieRelease = new Date(name === 'movie' ? dateMovie.release_date : dateMovie.seasons[0].air_date)
+        const ano = movieRelease.getFullYear()
+        setRelease(ano)
+        const hrs = Math.floor(dateMovie.runtime / 60)
+        const min = dateMovie.runtime % 60
+        setHours((`${hrs}`).slice(-2))
+        setMinute((`${min}`).slice(-2))
         })
         .catch(function (error) {
         console.error(error);
         });
 
-      },[id])
+        axios
+        .request(release_movie)
+        .then(function (response) {
+        setReleaseMovie(response.data.results)
+        setFound(releaseMovie.find((item) => item.iso_3166_1 === 'BR'))
+        })
+        .catch(function (error) {
+        console.error(error);
+        });
+
+      },[id, name, found, releaseMovie, dateMovie])
     return(
         <>
             <Box className='container'
@@ -68,19 +99,38 @@ export default function ViewMovie(){
             >
               <Header />
               {dateMovie ? 
-                <Grid container className='grid'>
+                <Grid container className='grid_view'>
                   <Grid item className='left'>
-                    <h1>{dateMovie.title}</h1>
+                    <div className='certification'>
+                      <span className='date'>{release} </span>
+                      {found ? 
+                      <Typography className='age' variant='body1'
+                        sx={{
+                          backgroundColor: 
+                          found.release_dates[0].certification === '10' ? 'blue' : 
+                          found.release_dates[0].certification === '12' ? 'rgb(204, 204, 18)' :
+                          found.release_dates[0].certification === '14' ? 'orange' :
+                          found.release_dates[0].certification === '16'  ? 'red' : 
+                          found.release_dates[0].certification === '18' ? 'black' : 'green'
+                      }}>
+                        {found.release_dates[0].certification} 
+                      </Typography>
+                      : ''}
+
+                      <span className='genres'>{dateMovie.genres[0].name}{dateMovie.genres[1].name ? ' | ' + dateMovie.genres[1].name : ''}</span>
+                      <span className='time'>{name === 'movie' ? `${hours}h ${minute}m` : dateMovie.seasons[0].name}</span>
+                    </div>
+                    <h1>{name === 'movie'? dateMovie.title : dateMovie.name}</h1>
                     <p>{dateMovie.overview}</p>
                     
                     <div className='button_video'>
-                      <button onClick={openVideo} >
-                      { <PlayArrowIcon /> } Trailer
-                      </button>
+                      <Button variant='outlined' onClick={openVideo} startIcon={ <PlayArrowIcon /> } >
+                       Trailer
+                      </Button>
 
-                      <button >
-                      { <AddIcon /> } Minha Lista
-                      </button>
+                      <Button variant='contained' startIcon={ <AddIcon /> } >
+                       Minha Lista
+                      </Button>
                     </div>
                   </Grid>
                   
