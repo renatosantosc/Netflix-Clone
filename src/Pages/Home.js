@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Header from '../Components/Header';
 import Modal from '../Components/Modal';
 import Slider from '../Components/Slides'
-import { Box, Button } from '@mui/material'
+import { Box, Button, CircularProgress } from '@mui/material'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
 import '@fontsource/roboto/300.css'
@@ -68,8 +68,8 @@ export default function Home(){
     .request(options)
     .then(function (response) {
       setDataMovie(response.data)
-      setBack(imageURL + dataMovie.results[3].backdrop_path)
-      setIdVideo(dataMovie.results[3].id)
+      setBack(imageURL + dataMovie.results[0].backdrop_path)
+      setIdVideo(dataMovie.results[0].id)
     })
     .catch(function (error) {
       console.error(error);
@@ -93,12 +93,13 @@ export default function Home(){
             {videoURL ? 
               <Modal setOpen={setOpen} open={open} id={videoURL.results[0].key} />
             : '' }
+            {dataMovie ? 
             <div className='title'>
               <div className='right'>
                 {dataMovie ?
                   <div className='description'>  
-                    <h1>{dataMovie.results[3].title}</h1>
-                    <p>{dataMovie.results[3].overview}</p>   
+                    <h1>{dataMovie.results[0].title}</h1>
+                    <p>{dataMovie.results[0].overview}</p>   
                   </div>
                 : ''}
 
@@ -117,14 +118,22 @@ export default function Home(){
                   
                 </div>
 
-            </div> 
+            </div>
+            : <Box width='100vw' height='100vh' sx={{
+                backgroundColor: 'transparent',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+                <CircularProgress sx={{color: 'red'}} />
+              </Box> }
         </Box>
         {dataMovie ? 
-          <Slider movies={dataMovie.results} title='Filmes em alta' />
+          <Slider movies={dataMovie.results} title='Filmes em alta' category={'movie'} />
         : '' }
 
         {discover ? 
-          <Slider movies={discover.results} title='Séries em alta' />
+          <Slider movies={discover.results} title='Séries em alta' category={'tv'} />
         : '' }
       </>    
     )
