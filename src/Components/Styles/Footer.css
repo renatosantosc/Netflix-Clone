@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+.grid_container_footer .grid_links .grid_button_link{
+    text-decoration: none;
+}
+.grid_container_footer .grid_links .grid_button_link .MuiButton-text{
+    font-size: 0.55rem;
+    color: #d1d1d1;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+}
+.grid_container_footer .grid_links span, .grid_container_footer .grid_social .grid_span span{
+    font-size: 1.1rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+.grid_container_footer .grid_links .item_link .link_active .active .MuiButton-text{
+    color: red;
+    font-weight: bold;
+}
+.grid_container_footer .grid_social .grid_content .MuiButton-text{
+    font-size: 0.7rem;
+    font-family: 'Roboto', sans-serif;
+}
