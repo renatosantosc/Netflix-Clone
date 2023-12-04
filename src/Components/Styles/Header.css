@@ -21,12 +21,13 @@
     z-index: 999;
     box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.445);
     width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
 }
 .header .container{
     transition: 0.7s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 998;
 }
 .grid .links .button:hover{
     border-bottom: 2px solid #fff;
