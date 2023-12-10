@@ -6,7 +6,7 @@ import Header from '../Components/Header';
 import Modal from '../Components/Modal';
 import Slider from '../Components/Slides';
 import Footer from  '../Components/Footer'
-import { Box, Button, CircularProgress, Divider } from '@mui/material'
+import { Box, Button, CircularProgress } from '@mui/material'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
 import '@fontsource/roboto/300.css'
@@ -136,14 +136,8 @@ export default function Home(){
         {discover ? 
           <Slider movies={discover.results} title='Séries em alta' category={'tv'} />
         : '' }
-        {dataMovie || discover ?
-          <>
-            <Box width={'100%'} display={'flex'} justifyContent={'center'}>
-              <Divider sx={{backgroundColor: 'gray', width: '90%'}} />
-            </Box>
-            <Footer />
-          </>
-        : ''} 
+        
+        {dataMovie && discover ? <Footer /> : ''} 
       </>    
     )
 }
