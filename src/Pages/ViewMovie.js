@@ -6,6 +6,7 @@ import './Styles/ViewMovie.css'
 import Modal from '../Components/Modal'
 import Header from '../Components/Header'
 import Slides from '../Components/Slides'
+import Footer from '../Components/Footer'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
 
@@ -22,6 +23,7 @@ export default function ViewMovie(){
     const [minute, setMinute] = useState(null)
     const [hours, setHours] = useState(null)
     const [found, setFound] = useState(null)
+    const [reload, setReload] = useState(null)
     const imageURL = 'https://image.tmdb.org/t/p/original';
     const { id, name } = useParams()
 
@@ -122,6 +124,7 @@ export default function ViewMovie(){
         .request(recommendation)
         .then(function (response) {
           setRecommendations(response.data.results)
+          setReload(id)
         })
         .catch(function (error) {
         console.error(error);
@@ -137,8 +140,9 @@ export default function ViewMovie(){
                 padding: '0 10px'
             }}
             >
+              
               <Header />
-              {dateMovie && release && recommendations ? 
+              {dateMovie && release && recommendations && reload === id ? 
                 <Grid container className='grid_view'>
                   <Grid item className='left'>
                     <div className='certification'>
@@ -192,20 +196,21 @@ export default function ViewMovie(){
                   <CircularProgress sx={{color: 'red'}} />
                 </Box> }
 
-                {newCast ? 
+                {newCast && reload === id ? 
                   <Slides title='Elenco' cast={newCast} name={name} />
                 : ''}
 
-                {recommendations && name === 'movie' ? 
+                {recommendations && name === 'movie' && reload === id ? 
                   <Slides title={`Recomendações`} movies={recommendations} category={'movie'} />
                 : ''}
 
-                {recommendations && name === 'tv' ? 
+                {recommendations && name === 'tv' && reload === id ? 
                   <Slides title={`Recomendações`} movies={recommendations} category={'tv'} />
                 : ''}
 
               </Box>
                 {key && open ? <Modal setOpen={setOpen} open={open} id={key.results[0].key} /> : ''}
+                {dateMovie && newCast && recommendations && reload === id ? <Footer /> : ''}
         </>
     )
 }
