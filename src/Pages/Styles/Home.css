@@ -16,6 +16,16 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.270);
     box-shadow: 10px 10px 30px rgb(0, 0, 0);
+    animation-name: up;
+    animation-duration: 2s;
+}
+@keyframes up{
+    0%{
+        transform: scale(0.5);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
 .body .title .right{
     display: grid;

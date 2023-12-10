@@ -5,6 +5,16 @@
     grid-template-columns: 35% 65%;
     justify-content: center;
     align-items: center;
+    animation-name: back;
+    animation-duration: 2s;
+}
+@keyframes back{
+    0%{
+        transform: scale(0.5);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
 .container .grid_view .rigth{
     width: 100%;
