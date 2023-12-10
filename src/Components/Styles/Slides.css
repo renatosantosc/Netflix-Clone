@@ -8,7 +8,7 @@
     overflow-x: scroll;
     overflow-y: hidden;
     scroll-behavior: smooth;
-    transition: 0.4s ease;
+    transition: 0.4s ease; 
 }
 .box span{
     padding-left: 20px;
@@ -19,6 +19,16 @@
     background-repeat: no-repeat;
     background-color: #030303;
     transition: 0.4s ease;
+    animation-name: up;
+    animation-duration: 2s;
+}
+@keyframes up{
+    0%{
+        transform: scale(0.5);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
 .box ul li .card:hover{
     transform: scale(1.1);
