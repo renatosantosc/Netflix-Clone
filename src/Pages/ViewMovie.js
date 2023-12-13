@@ -24,28 +24,11 @@ export default function ViewMovie(){
     const [hours, setHours] = useState(null)
     const [found, setFound] = useState(null)
     const [reload, setReload] = useState(null)
+    const [length, setLength] = useState(0)
     const imageURL = 'https://image.tmdb.org/t/p/original';
     const { id, name } = useParams()
 
-    const openVideo = () =>{
-        const video = {
-            method: 'GET',
-            url: `https://api.themoviedb.org/3/${name}/${id}/videos?language=pt-BR&page=1`,
-            headers: {
-              accept: 'application/json',
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
-            }
-          };
-        axios
-        .request(video)
-        .then(function (response) {
-            setKey(response.data)
-            setOpen(true)
-        })
-        .catch(function (error) {
-        console.error(error);
-        });
-    }
+    const openVideo = () =>{ setOpen(true) }
 
       useEffect(() =>{
         const movie = {
@@ -84,6 +67,15 @@ export default function ViewMovie(){
             }
           };
 
+          const video = {
+            method: 'GET',
+            url: `https://api.themoviedb.org/3/${name}/${id}/videos?language=pt-BR&page=1`,
+            headers: {
+              accept: 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
+            }
+          };
+
         axios
         .request(movie)
         .then(function (response) {
@@ -95,6 +87,16 @@ export default function ViewMovie(){
         const min = dateMovie.runtime % 60
         setHours((`${hrs}`).slice(-2))
         setMinute((`${min}`).slice(-2))
+        })
+        .catch(function (error) {
+        console.error(error);
+        });
+
+        axios
+        .request(video)
+        .then(function (response) {
+            setKey(response.data)
+            setLength(key.results.length)
         })
         .catch(function (error) {
         console.error(error);
@@ -130,7 +132,7 @@ export default function ViewMovie(){
         console.error(error);
         });
 
-      },[id, name, found, releaseMovie, dateMovie, cast, recommendations])
+      },[id, name, found, releaseMovie, dateMovie, cast, recommendations, length, key])
     return(
         <>
             <Box className='container'
@@ -167,13 +169,15 @@ export default function ViewMovie(){
                          name === 'tv' ? dateMovie.seasons[0].name : ''}
                       </span>
                     </div>
-                    <h1>{name === 'movie'? dateMovie.title : dateMovie.name}</h1>
-                    <p>{dateMovie.overview}</p>
+                    <h1 className='title'>{name === 'movie'? dateMovie.title : dateMovie.name}</h1>
+                    <p className='overview'>{dateMovie.overview}</p>
                     
                     <div className='button_video'>
-                      <Button variant='outlined' onClick={openVideo} startIcon={ <PlayArrowIcon /> } >
-                       Trailer
-                      </Button>
+                      {key && length > 0 ? 
+                        <Button variant='outlined' onClick={openVideo} startIcon={ <PlayArrowIcon /> } >
+                        Trailer
+                        </Button>
+                      : ''}
 
                       <Button variant='contained' startIcon={ <AddIcon /> } >
                        Minha Lista
