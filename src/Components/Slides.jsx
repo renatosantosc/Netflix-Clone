@@ -53,7 +53,7 @@ export default function Slide_Movies(props){
                                 }}
                                 >
                                     <div className='play'>
-                                        <Link to={`/Assistir/${props.category}/${item.id}`} className='link'>
+                                        <Link to={`/${props.category}/${item.id}`} className='link'>
                                             <Button className='play_movie' variant='contained' size='small'>
                                                 <PlayArrowIcon />
                                             </Button>
