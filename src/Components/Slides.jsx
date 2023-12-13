@@ -53,8 +53,8 @@ export default function Slide_Movies(props){
                                 }}
                                 >
                                     <div className='play'>
-                                        <Link to={'/Assistir/' + props.category + '/' + item.id} className='link'>
-                                            <Button className='play_movie' variant='contained' size='small' >
+                                        <Link to={`/Assistir/${props.category}/${item.id}`} className='link'>
+                                            <Button className='play_movie' variant='contained' size='small'>
                                                 <PlayArrowIcon />
                                             </Button>
                                         </Link>
@@ -86,7 +86,7 @@ export default function Slide_Movies(props){
                                 
                     </ul>
                     {arrow ?
-                        <Box className='button' sx={{top: props.movies ? '-150px' : '-165px'}}>
+                        <Box className='button' sx={{top: props.movies ? '-150px' : '-175px'}}>
                             <IconButton className='buttons' size='large' onClick={handleLeft}>
                                 <KeyboardArrowLeft fontSize='inherit' />
                             </IconButton>
