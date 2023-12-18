@@ -61,6 +61,17 @@
     font-family: 'Roboto', sans-serif;
     font-size: 3.2rem;
 }
+.body .title .right .button_footer .link{
+    width: 35%;
+    text-decoration: none;
+}
+.body .title .right .button_footer .link .MuiButton-outlined{
+    background-color: #fff;
+    color: #252525;
+    border-color: #fff;
+    width: 100%;
+    z-index: 0;
+}
 .body .title .right .button_footer .MuiButton-outlined{
     background-color: #fff;
     color: #252525;
