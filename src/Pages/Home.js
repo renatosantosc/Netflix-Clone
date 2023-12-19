@@ -2,17 +2,19 @@ import axios from 'axios';
 import '../App.css';
 import './Styles/Home.css';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
 import Modal from '../Components/Modal';
 import Slider from '../Components/Slides';
-import Footer from  '../Components/Footer'
-import { Box, Button, CircularProgress } from '@mui/material'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import AddIcon from '@mui/icons-material/Add'
-import '@fontsource/roboto/300.css'
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/500.css'
-import '@fontsource/roboto/700.css'
+import Footer from  '../Components/Footer';
+import { Box, Button, CircularProgress } from '@mui/material';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import AddIcon from '@mui/icons-material/Add';
+import InfoIcon from '@mui/icons-material/Info';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 
 export default function Home(){
@@ -22,28 +24,10 @@ export default function Home(){
   const [back, setBack] = useState()
   const [open, setOpen] = useState(false)
   const [videoURL, setVideoURL] = useState(null)
+  const [length, setLength] = useState(0)
   const [idVideo, setIdVideo] = useState(null)
 
-  const video = {
-    method: 'GET',
-    url: `https://api.themoviedb.org/3/movie/${idVideo}/videos?language=pt-BR&page=1`,
-    headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
-    }
-  };
-
-  const handleOpen = () =>{
-    axios
-    .request(video)
-    .then(function (response) {
-      setVideoURL(response.data)
-      setOpen(true)
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-  }
+  const handleOpen = () =>{ setOpen(true) }
 
   useEffect(()=>{ 
     const imageURL = 'https://image.tmdb.org/t/p/original';
@@ -65,12 +49,31 @@ export default function Home(){
       }
     };
 
+    const video = {
+      method: 'GET',
+      url: `https://api.themoviedb.org/3/movie/${idVideo}/videos?language=pt-BR&page=1`,
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
+      }
+    };
+
     axios
     .request(options)
     .then(function (response) {
       setDataMovie(response.data)
       setBack(imageURL + dataMovie.results[0].backdrop_path)
       setIdVideo(dataMovie.results[0].id)
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+
+    axios
+    .request(video)
+    .then(function (response) {
+      setVideoURL(response.data)
+      setLength(videoURL.results.length)
     })
     .catch(function (error) {
       console.error(error);
@@ -85,7 +88,7 @@ export default function Home(){
       console.error(error);
     });
 
-  },[dataMovie, discover])
+  },[dataMovie, discover, videoURL, idVideo])
 
     return(
       <>
@@ -94,7 +97,7 @@ export default function Home(){
             {videoURL ? 
               <Modal setOpen={setOpen} open={open} id={videoURL.results[0].key} />
             : '' }
-            {dataMovie ? 
+            {dataMovie && back ? 
             <div className='title'>
               <div className='right'>
                 {dataMovie ?
@@ -105,9 +108,17 @@ export default function Home(){
                 : ''}
 
                   <div className='button_footer'>
-                  <Button variant='outlined' onClick={handleOpen} startIcon={ <PlayArrowIcon /> }>
-                    Trailer
-                  </Button>
+                    {videoURL && length > 0 ?
+                      <Button variant='outlined' onClick={handleOpen} startIcon={ <PlayArrowIcon /> }>
+                        Trailer
+                      </Button>
+                    :
+                      <Link to={`/movie/${dataMovie.results[0].id}`} className='link'>
+                        <Button variant='outlined' startIcon={ <InfoIcon sx={{paddingBottom: '3px'}} /> }>
+                            Detalhes
+                        </Button>
+                      </Link>
+                    }
 
                     <Button variant='contained' startIcon={ <AddIcon /> }>
                       Minha Lista
