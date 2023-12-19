@@ -1,17 +1,19 @@
 import axios from 'axios';
-import './Styles/Home.css'
+import './Styles/Home.css';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
 import Modal from '../Components/Modal';
 import Slider from '../Components/Slides';
-import Footer from  '../Components/Footer'
-import { Box, Button, CircularProgress } from '@mui/material'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import AddIcon from '@mui/icons-material/Add'
-import '@fontsource/roboto/300.css'
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/500.css'
-import '@fontsource/roboto/700.css'
+import Footer from  '../Components/Footer';
+import { Box, Button, CircularProgress } from '@mui/material';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import AddIcon from '@mui/icons-material/Add';
+import InfoIcon from '@mui/icons-material/Info';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 export default function Film(){
 
@@ -167,7 +169,13 @@ export default function Film(){
                         <Button variant='outlined' onClick={handleOpen} startIcon={ <PlayArrowIcon /> }>
                             Trailer
                         </Button>
-                    : ''}
+                    : 
+                        <Link to={`/movie/${nowPlaying.results[0].id}`} className='link'>
+                          <Button variant='outlined' startIcon={ <InfoIcon sx={{paddingBottom: '3px'}} /> }>
+                              Detalhes
+                          </Button>
+                        </Link>
+                      }
 
                     <Button variant='contained' startIcon={ <AddIcon /> } >
                       Minha Lista
