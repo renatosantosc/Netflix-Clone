@@ -13,8 +13,10 @@ import AddIcon from '@mui/icons-material/Add'
 export default function ViewMovie(){
 
     const [dateMovie, setDateMovie] = useState(null)
-    const [cast, setCast] = useState(null)
-    const [newCast, setNewCast] = useState(null)
+    const [castMovie, setCastMovie] = useState(null)
+    const [newCastMovie, setNewCastMovie] = useState(null)
+    const [castSeries, setCastSeries] = useState(null)
+    const [newCastSeries, setNewCastSeries] = useState(null)
     const [recommendations, setRecommendations] = useState(null)
     const [open, setOpen] = useState(false)
     const [key, setKey] = useState(null)
@@ -49,7 +51,7 @@ export default function ViewMovie(){
             }
           };
 
-          const credits = {
+          const credits_movie = {
             method: 'GET',
             url: `https://api.themoviedb.org/3/${name}/${id}/credits?language=pt-BR`,
             headers: {
@@ -57,6 +59,15 @@ export default function ViewMovie(){
               Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
             }
           };
+
+          const credits_series = {
+              method: 'GET',
+              url: `https://api.themoviedb.org/3/${name}/${id}/aggregate_credits?language=pt-BR`,
+              headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGNhMDkwOTYyYjlkY2YxZjYyNzhjNjQ3YWI1YzhmNSIsInN1YiI6IjY1MzdlZmUxNDFhYWM0MDBhYTA4MTIzOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.T0YHaxg5E2HUn_wnrvxue_wwmqslufrrwZOJ10jgcjo'
+              }
+            };
 
           const recommendation = {
             method: 'GET',
@@ -113,10 +124,19 @@ export default function ViewMovie(){
         });
 
         axios
-        .request(credits)
+        .request(credits_movie)
         .then(function (response) {
-          setCast(response.data.cast)
-          setNewCast(cast.slice(0, 20))
+          setCastMovie(response.data.cast)
+          setNewCastMovie(castMovie.slice(0, 20))
+        })
+        .catch(function (error) {
+        console.error(error);
+        });
+        axios
+        .request(credits_series)
+        .then(function (response) {
+          setCastSeries(response.data.cast)
+          setNewCastSeries(castSeries.slice(0, 20))
         })
         .catch(function (error) {
         console.error(error);
@@ -132,7 +152,7 @@ export default function ViewMovie(){
         console.error(error);
         });
 
-      },[id, name, found, releaseMovie, dateMovie, cast, recommendations, length, key])
+      },[id, name, found, releaseMovie, dateMovie, castMovie, castSeries, recommendations, length, key])
     return(
         <>
             <Box className='container'
@@ -166,7 +186,9 @@ export default function ViewMovie(){
                       <span className='genres'>{dateMovie.genres[0].name ? dateMovie.genres[0].name : ''}{dateMovie.genres[1].name ? ' | ' + dateMovie.genres[1].name : ''}</span>
                       <span className='time'>
                         {name === 'movie' ? `${hours}h ${minute}m` :  
-                         name === 'tv' ? dateMovie.seasons[0].name : ''}
+                         name === 'tv' && dateMovie.number_of_seasons === 1 
+                          ? `${dateMovie.number_of_seasons} temporada` 
+                          : `${dateMovie.number_of_seasons} temporadas`}
                       </span>
                     </div>
                     <h1 className='title'>{name === 'movie'? dateMovie.title : dateMovie.name}</h1>
@@ -200,9 +222,13 @@ export default function ViewMovie(){
                   <CircularProgress sx={{color: 'red'}} />
                 </Box> }
 
-                {newCast && reload === id ? 
-                  <Slides title='Elenco' cast={newCast} name={name} />
-                : ''}
+                {newCastMovie && reload === id && name === 'movie' ? 
+                  <Slides title='Elenco' cast={newCastMovie} name={name} />
+                  : ''}
+
+                {newCastSeries && reload === id && name === 'tv' ? 
+                  <Slides title='Elenco' cast={newCastSeries} name={name} />
+                  : ''}
 
                 {recommendations && name === 'movie' && reload === id ? 
                   <Slides title={`Recomendações`} movies={recommendations} category={'movie'} />
@@ -214,7 +240,7 @@ export default function ViewMovie(){
 
               </Box>
                 {key && open ? <Modal setOpen={setOpen} open={open} id={key.results[0].key} /> : ''}
-                {dateMovie && newCast && recommendations && reload === id ? <Footer /> : ''}
+                {dateMovie && reload === id ? <Footer /> : ''}
         </>
     )
 }
