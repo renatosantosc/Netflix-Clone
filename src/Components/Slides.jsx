@@ -77,7 +77,10 @@ export default function Slide_Movies(props){
                                             >
                                                 <div className='character'>
                                                     <span className='name'>Personagem:</span>
-                                                    <span className='character_name'>{items.character}</span>
+                                                    <span className='character_name'>
+                                                        {props.name === 'movie' ? items.character
+                                                        : items.roles[0].character}
+                                                    </span>
                                                 </div>
                                             </Button>
                                             <span className='cast_name'>{items.name}</span>
