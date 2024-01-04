@@ -94,7 +94,9 @@ export default function Header(props){
                 </Grid>
 
                 <Grid item lg={6} md={6} sm={6} xs={6} className='search' sx={{textAlign: 'right'}}>
-                    <Button> <SearchIcon /> </Button>
+                    <NavLink to='/Search' className='button'>
+                        <Button variant='text'> <SearchIcon /> </Button>
+                    </NavLink>
                     <Button> <NotificationIcon /> </Button>
                     <Button
                         title="Perfil"
