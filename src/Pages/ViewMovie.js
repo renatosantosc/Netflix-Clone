@@ -169,7 +169,7 @@ export default function ViewMovie(){
                   <Grid item className='left'>
                     <div className='certification'>
                       <span className='date'>{release} </span>
-                      {found ? 
+                      {found && found.release_dates[0].certification ? 
                       <Typography className='age' variant='body1'
                         sx={{
                           backgroundColor: 
@@ -183,7 +183,7 @@ export default function ViewMovie(){
                       </Typography>
                       : ''}
 
-                      <span className='genres'>{dateMovie.genres[0].name ? dateMovie.genres[0].name : ''}{dateMovie.genres[1].name ? ' | ' + dateMovie.genres[1].name : ''}</span>
+                      <span className='genres'>{dateMovie.genres[0] && dateMovie.genres[0].name ? dateMovie.genres[0].name : ''}{dateMovie.genres[1] && dateMovie.genres[1].name ? ' | ' + dateMovie.genres[1].name : ''}</span>
                       <span className='time'>
                         {name === 'movie' ? `${hours}h ${minute}m` :  
                          name === 'tv' && dateMovie.number_of_seasons === 1 
