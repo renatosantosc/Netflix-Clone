@@ -15,7 +15,7 @@ export default function Slide_Movies(props){
     const carousel = useRef(null)
     const [arrow, setArrow] = useState(false)
     const [box, setBox] = useState(false)
-    const width = window.innerWidth + 'px'
+    const width= window.innerWidth
     const handleLeft = () =>{ carousel.current.scrollLeft -= carousel.current.offsetWidth }
     const handleRight = () =>{ carousel.current.scrollLeft += carousel.current.offsetWidth }
     useEffect(()=>{
@@ -46,8 +46,18 @@ export default function Slide_Movies(props){
                             <li key={item.id}>
                                 <Button className='card'
                                 sx={{
-                                    width: `calc(${width}/11)`,
-                                    height: '185px',
+                                    width: 
+                                        width < 520 ? '25vw' :
+                                        width >= 520 && width < 540 ? '23vw' :
+                                        width >= 540 && width < 600 ? '21vw' :
+                                        width >= 600 && width < 690 ? '19vw' :
+                                        width >= 690 && width < 770 ? '17vw' :
+                                        width >= 770 && width < 840 ? '15vw' :
+                                        width >= 840 && width < 940 ? '13vw' : 
+                                        width >= 940 && width < 1040 ? '12vw' :
+                                        width >= 1040 && width < 1140 ? '11vw' :
+                                        width >= 1140 && width < 1278 ? '10vw' : '9vw',
+                                    height: '28vh',
                                     backgroundImage: `url(${imageURL + item.poster_path})`,
                                     margin: '5px'
                                 }}
@@ -69,8 +79,18 @@ export default function Slide_Movies(props){
                                         <li key={items.id}>
                                             <Button className='card'
                                             sx={{
-                                                width: `calc(${width}/11)`,
-                                                height: '185px',
+                                                width:
+                                                    width < 520 ? '25vw' :
+                                                    width >= 520 && width < 540 ? '23vw' :
+                                                    width >= 540 && width < 600 ? '21vw' :
+                                                    width >= 600 && width < 690 ? '19vw' :
+                                                    width >= 690 && width < 770 ? '17vw' :
+                                                    width >= 770 && width < 840 ? '15vw' :
+                                                    width >= 840 && width < 940 ? '13vw' : 
+                                                    width >= 940 && width < 1040 ? '12vw' :
+                                                    width >= 1040 && width < 1140 ? '11vw' :
+                                                    width >= 1140 && width < 1278 ? '10vw' : '9vw',
+                                                height: '28vh',
                                                 backgroundImage: `url(${imageURL + items.profile_path})`,
                                                 margin: '5px'
                                             }}
