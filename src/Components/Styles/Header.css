@@ -9,7 +9,7 @@
 .grid .links .button{
     text-decoration: none;
 }
-.grid .links .active .MuiButton-text{
+.grid .links .active .MuiButton-text, .search .active .MuiButton-text{
     color: red;
     font-weight: bold;
 }
