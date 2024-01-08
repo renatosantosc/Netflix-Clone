@@ -15,8 +15,9 @@
 }
 .box ul li .card{
     object-fit: cover;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     background-color: #030303;
     transition: 0.4s ease;
     animation-name: up;
