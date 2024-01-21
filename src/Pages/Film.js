@@ -23,10 +23,12 @@ export default function Film(){
     const [terrorMovie, setTerrorMovie] = useState()
     const [fictionMovie, setFictionMovie] = useState()
     const [back, setBack] = useState()
+    const [alt, setAlt] = useState()
     const [open, setOpen] = useState(false)
     const [videoURL, setVideoURL] = useState()
     const [length, setLength] = useState(0)
     const [idVideo, setIdVideo] = useState(null)
+    const width = window.innerWidth
 
     const handleOpen = () =>{ setOpen(true) }
 
@@ -92,6 +94,7 @@ export default function Film(){
         .then(function (response) {
         setNowPlaying(response.data)
         setBack(imageURL + nowPlaying.results[0].backdrop_path)
+        setAlt(imageURL + nowPlaying.results[0].poster_path)
         setIdVideo(nowPlaying.results[0].id)
         })
         .catch(function (error) {
@@ -149,7 +152,7 @@ export default function Film(){
 
     return(
         <>
-        <Box className='body' width={'100vw'} height={'85vh'} sx={{backgroundImage: `url(${back})`}}>
+        <Box className='body' width={'100vw'} height={'85vh'} sx={{backgroundImage: width > 450 ? `url(${back})` : `url(${alt})`}}>
             <Header />
             {open ? 
               <Modal setOpen={setOpen} open={open} id={videoURL.results[0].key} />

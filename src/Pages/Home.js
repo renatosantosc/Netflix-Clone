@@ -22,10 +22,12 @@ export default function Home(){
   const [dataMovie, setDataMovie] = useState()
   const [discover, setDiscover] = useState()
   const [back, setBack] = useState()
+  const [alt, setAlt] = useState()
   const [open, setOpen] = useState(false)
   const [videoURL, setVideoURL] = useState(null)
   const [length, setLength] = useState(0)
   const [idVideo, setIdVideo] = useState(null)
+  const width = window.innerWidth
 
   const handleOpen = () =>{ setOpen(true) }
 
@@ -63,6 +65,7 @@ export default function Home(){
     .then(function (response) {
       setDataMovie(response.data)
       setBack(imageURL + dataMovie.results[0].backdrop_path)
+      setAlt(imageURL + dataMovie.results[0].poster_path)
       setIdVideo(dataMovie.results[0].id)
     })
     .catch(function (error) {
@@ -92,7 +95,10 @@ export default function Home(){
 
     return(
       <>
-        <Box className='body' width={'100vw'} height={'85vh'} sx={{backgroundImage: `url(${back})`}}>
+        <Box className='body' 
+            width={'100vw'} 
+            height={'85vh'} 
+            sx={{backgroundImage: width > 450 ? `url(${back})` : `url(${alt})`}}>
             <Header />
             {videoURL ? 
               <Modal setOpen={setOpen} open={open} id={videoURL.results[0].key} />
