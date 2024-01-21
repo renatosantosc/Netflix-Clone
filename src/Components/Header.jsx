@@ -90,10 +90,6 @@ export default function Header(){
                             <Button variant='text'>Filmes</Button>
                         </NavLink>
 
-                        {/* <NavLink to='/Bombando' className='button'>
-                            <Button variant='text'>Bombando</Button>
-                        </NavLink> */}
-
                     </div>
                 </Grid>
 
