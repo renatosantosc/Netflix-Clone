@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 .grid .Logo{
     font-size: 1.8rem;
     color: red;
@@ -37,3 +38,52 @@
     background-color: #252525;
     color: #fff;
 }
+
+@media(max-width: 600px){
+    .header .container .grid .links,
+    .header .container .search .button{
+        display: none;
+    }
+    .header .container .grid{
+        justify-content: start;
+        align-items: center;
+    }
+    /* CSS responsável pelo toggle */
+    .box_toggle .grid_toggle .links_toggle .button{
+        text-decoration: none;
+        width: 100%;
+    }
+    .box_toggle .grid_toggle .links_toggle .button .MuiButton-text{
+        color: #fff;
+        font-size: 0.65rem;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+        letter-spacing: 1.1px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 30%;
+        margin: 5% 0;
+    }
+    .box_toggle .grid_toggle .links_toggle .active .MuiButton-text{
+        color: red;
+        font-weight: bolder;
+    }
+    .box_toggle .grid_toggle .avatar_toggle{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 15%;
+        padding-left: 30%;
+        color: #fff;
+    }
+    .box_toggle .grid_toggle .avatar_toggle span{
+        font-size: 0.6rem;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 100;
+        letter-spacing: 1.1px;
+        margin-top: 8%;
+    }
+}
+
