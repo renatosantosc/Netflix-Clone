@@ -117,11 +117,11 @@
     .body .title{
         grid-template-columns: 65% 10%;
     }
-}
-@media(max-width: 750px){
     .body{
         background-position: center;
     }
+}
+@media(max-width: 750px){
     .body .title .right .description h1{
         font-size: 2.2rem;
     }
@@ -134,6 +134,7 @@
     }
 }
 @media(max-width: 590px){
+    
     .body .title{
         display: flex;
         flex-direction: column;
@@ -165,4 +166,13 @@
         width: 100%;
     }
 
+}
+
+@media(max-width: 450px){
+    .body .title .right .description h1{
+        display: none;
+    }
+    .body .title .right .button_footer{
+        margin-bottom: 0;
+    }
 }
