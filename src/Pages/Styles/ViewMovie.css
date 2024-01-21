@@ -75,7 +75,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: flex-end;
 }
 .container .grid_view .left .certification .date, .container .grid_view .left .certification .genres, .container .grid_view .left .certification .time{
     font-family: 'Roboto', sans-serif;
@@ -146,11 +146,11 @@
         display: flex;
         flex-direction: column-reverse;
     }
-    .container .grid_view .left, .container .grid_view .rigth{
-        height: 40%;
-    }
     .container .grid_view .rigth{
-        height: 60%;
+        height: 45%;
+    }
+    .container .grid_view .left{
+        height: 55%;
     }
     .container .grid_view .left .button_video, .container .grid_view .left .certification{
         margin: 0;
@@ -174,5 +174,38 @@
     }
     .container .grid_view .left .certification .time{
         width: 15%;
+    }
+}
+@media(max-width: 450px){
+    .container .grid_view .left{
+        width: 100vw;
+    }
+    .container .grid_view .left .overview, 
+    .container .grid_view .left .title, 
+    .container .grid_view .left .button_video,
+    .container .grid_view .left .certification{
+        margin-right: 5%;
+    }
+    .container .grid_view .left .button_video{
+        flex-direction: column;
+        margin-top: 5%;
+        justify-content: center;
+        align-items: center;
+    }
+    .container .grid_view .left .certification {
+        margin-bottom: 3%;
+    }
+    .container .grid_view .left .button_video .MuiButton-outlined, .container .grid_view .left .button_video .MuiButton-contained{
+        width: 80%;
+        margin: 2% 0;
+    }
+    .container .grid_view .left .certification .time{
+        padding-right: 5%;
+    }
+    .container .grid_view .left .overview {
+        height: 35%;
+        overflow: scroll;
+        display: flex;
+        align-items: center;
     }
 }
