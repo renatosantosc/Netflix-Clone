@@ -3,15 +3,19 @@ import { Box, Grid, TextField, Button } from '@mui/material'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-// import SearchIcon from '@mui/icons-material/Search';
-// import './Styles/Search.css'
 
 
 export default function Search(){
 
     const [search, setSearch] = useState()
     const [resultSearch, setResultSearch] = useState()
+    const [width, setWidth] = useState()
     const imageURL = 'https://image.tmdb.org/t/p/original';
+
+    const width_window = () =>{
+        setWidth(window.innerWidth)
+    }
+    setInterval(width_window, 1000)
 
     const handleChange = e => {
         setSearch(e.target.value)
@@ -48,9 +52,15 @@ export default function Search(){
                     width={'100%'} 
                     justifyContent={'center'}
                     alignItems={'center'}
-                    sx={{marginTop: '7%', gap: '10px'}}
+                    sx={{
+                        marginTop: 
+                            width < 450 ? '25%' :
+                            width <= 450 && width > 520 ? '19%' : 
+                            width >= 520 && width < 601 ? '16%' : 
+                            width >= 601 && width < 720 ? '12%' : '9%',
+                        color: '#fff'}}
                 >
-                    <Grid item width={'30%'} >
+                    <Grid item width={width <= 600 ? '80%' : '50%'} >
                         <TextField 
                             type='text'
                             variant='outlined'
@@ -82,8 +92,8 @@ export default function Search(){
                             }}
                         />
                     </Grid>
-                    <Grid item width={'80%'} height={'80%'} justifyContent={'center'} sx={{marginTop: '2%'}}>
-                        <Grid container width={'100%'} height={'100%'} justifyContent={'center'}>
+                    <Grid item width={'80%'} sx={{marginTop: '5%'}}>
+                        <Grid container width={'100%'} >
                             {resultSearch && search.trim().length > 0 ? resultSearch.map(items =>{
                                 return(
                                     <Grid item xl={2} lg={2} md={3} xs={4} textAlign={'center'} key={items.id}>
@@ -91,12 +101,21 @@ export default function Search(){
                                         <Link to={`/${items.media_type}/${items.id}`}>
                                             <Button
                                                 sx={{
-                                                    width: '145px',
-                                                    height: '210px',
+                                                    width: 
+                                                        width < 520 ? '25vw' :
+                                                        width >= 520 && width < 540 ? '23vw' :
+                                                        width >= 540 && width < 600 ? '21vw' :
+                                                        width >= 600 && width < 690 ? '19vw' :
+                                                        width >= 690 && width < 770 ? '17vw' :
+                                                        width >= 770 && width < 840 ? '16vw' :
+                                                        width >= 840 && width < 940 ? '14vw' : 
+                                                        width >= 940 && width < 1040 ? '13vw' :
+                                                        width >= 1040 && width < 1140 ? '12vw' :
+                                                        width >= 1140 && width < 1278 ? '10vw' : '9vw',
+                                                    height: '29vh',
                                                     backgroundImage: `url(${imageURL + items.poster_path})`,
-                                                    margin: '10px',
-                                                    backgroundSize: 'contain',
-                                                    backgroundRepeat: 'no-repeat',
+                                                    margin: '5px 1px',
+                                                    backgroundSize: 'cover',
                                                     ':hover' : {
                                                         transform: 'scale(1.1)'
                                                     },
@@ -108,7 +127,7 @@ export default function Search(){
                                         
                                     </Grid>
                                 )
-                            }) : 'Nada'}
+                            }) : ''}
                         </Grid>
                     </Grid>
                 </Grid>
