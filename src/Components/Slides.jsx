@@ -16,6 +16,7 @@ export default function Slide_Movies(props){
     const [arrow, setArrow] = useState(false)
     const [box, setBox] = useState(false)
     const width= window.innerWidth
+    const height = window.screen.height
     const handleLeft = () =>{ carousel.current.scrollLeft -= carousel.current.offsetWidth }
     const handleRight = () =>{ carousel.current.scrollLeft += carousel.current.offsetWidth }
     useEffect(()=>{
@@ -47,7 +48,8 @@ export default function Slide_Movies(props){
                                 <Button className='card'
                                 sx={{
                                     width: 
-                                        width < 520 ? '25vw' :
+                                        width < 420 ? '27vw' :
+                                        width >= 420 && width < 520  ? '25vw' :
                                         width >= 520 && width < 540 ? '23vw' :
                                         width >= 540 && width < 600 ? '21vw' :
                                         width >= 600 && width < 690 ? '19vw' :
@@ -57,7 +59,13 @@ export default function Slide_Movies(props){
                                         width >= 940 && width < 1040 ? '12vw' :
                                         width >= 1040 && width < 1140 ? '11vw' :
                                         width >= 1140 && width < 1278 ? '10vw' : '9vw',
-                                    height: '28vh',
+                                    height:
+                                        height >= 1000 && height < 1200 && width < 950 ? '16vh' :
+                                        height >= 1000 && height >= 1200 && width < 950 ? '14vh' :
+                                        height <= 1000 && height > 780 && width > 950 ? '22vh' :
+                                        height <= 950 && height >= 805 && width < 450 ? '19vh' :
+                                        height < 805 && height >= 620 && width <= 450 ? '18vh' :
+                                        height < 620 && width < 450 ? '22vh' : '28vh',
                                     backgroundImage: `url(${imageURL + item.poster_path})`,
                                     margin: '5px'
                                 }}
@@ -80,7 +88,8 @@ export default function Slide_Movies(props){
                                             <Button className='card'
                                             sx={{
                                                 width:
-                                                    width < 520 ? '25vw' :
+                                                    width < 420 ? '27vw' :
+                                                    width >= 420 && width < 520  ? '25vw' :
                                                     width >= 520 && width < 540 ? '23vw' :
                                                     width >= 540 && width < 600 ? '21vw' :
                                                     width >= 600 && width < 690 ? '19vw' :
@@ -90,7 +99,13 @@ export default function Slide_Movies(props){
                                                     width >= 940 && width < 1040 ? '12vw' :
                                                     width >= 1040 && width < 1140 ? '11vw' :
                                                     width >= 1140 && width < 1278 ? '10vw' : '9vw',
-                                                height: '28vh',
+                                                height: 
+                                                    height >= 1000 && height < 1200 && width < 950 ? '16vh' :
+                                                    height >= 1000 && height >= 1200 && width < 950 ? '14vh' :
+                                                    height <= 1000 && height > 780 && width > 950 ? '22vh' :
+                                                    height <= 950 && height >= 805 && width < 450 ? '19vh' :
+                                                    height < 805 && height >= 620 && width <= 450 ? '18vh' :
+                                                    height < 620 && width < 450 ? '22vh' : '28vh',
                                                 backgroundImage: `url(${imageURL + items.profile_path})`,
                                                 margin: '5px'
                                             }}
@@ -109,7 +124,10 @@ export default function Slide_Movies(props){
                                 
                     </ul>
                     {arrow ?
-                        <Box className='button' sx={{top: props.movies ? '-150px' : '-175px'}}>
+                        <Box className='button' 
+                        sx={{top: 
+                            width < 450 ? '-110px' : 
+                            width >= 450 && width < 950 ? '-130px' : '-150px'}}>
                             <IconButton className='buttons' size='large' onClick={handleLeft}>
                                 <KeyboardArrowLeft fontSize='inherit' />
                             </IconButton>
