@@ -9,6 +9,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import HelpIcon from '@mui/icons-material/Help'
 import Logouticon from '@mui/icons-material/Logout'
 import SearchIcon from '@mui/icons-material/Search'
+import Toggle from "./Toggle";
 import './Styles/Header.css'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -16,9 +17,10 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
 
-export default function Header(props){
+export default function Header(){
     const [anchorEl, setAnchorEl] = useState(null)
     const [height, setHeight] = useState(null)
+    const [width, setWidth] = useState(window.innerWidth)
     const [dataMovie, setDataMovie] = useState()
     const [avatar, setAvatar] = useState()
     const open = Boolean(anchorEl)
@@ -30,6 +32,7 @@ export default function Header(props){
     }
     const view_Height = () =>{
         setHeight(window.scrollY)
+        setWidth(window.innerWidth)
     }
     setInterval(view_Height, 1000)
 
@@ -60,7 +63,7 @@ export default function Header(props){
         <div className='header'>
             <Grid className='container' container alignItems={'center'} width={'100%'} height={'10vh'} 
             sx={{
-                padding: '0px 35px',
+                padding: '0px 20px',
                 backgroundColor: height > 0 ? 'black' : 'rgba(0, 0, 0, 0.445)'
                 }}>
                 <Grid item lg={6} md={6} sm={6} xs={6} className='grid' 
@@ -69,6 +72,7 @@ export default function Header(props){
                     alignItems: 'center', 
                     height: '100%'
                 }}>
+                    {width <= 600 ? <Toggle avatar={avatar} /> : ''}
                     <Button className="Logo" variant='text'>
                         M
                     </Button>
@@ -86,19 +90,20 @@ export default function Header(props){
                             <Button variant='text'>Filmes</Button>
                         </NavLink>
 
-                        <NavLink to='/Bombando' className='button'>
+                        {/* <NavLink to='/Bombando' className='button'>
                             <Button variant='text'>Bombando</Button>
-                        </NavLink>
+                        </NavLink> */}
 
                     </div>
                 </Grid>
 
                 <Grid item lg={6} md={6} sm={6} xs={6} className='search' sx={{textAlign: 'right'}}>
                     <NavLink to='/Search' className='button'>
-                        <Button variant='text'> <SearchIcon /> </Button>
+                        <Button variant='text'> <SearchIcon className='icon_search' /> </Button>
                     </NavLink>
-                    <Button> <NotificationIcon /> </Button>
+                    <Button variant='text'> <NotificationIcon className='icon_notefication' /> </Button>
                     <Button
+                        variant='text'
                         title="Perfil"
                         id='basic-button'
                         aria-controls={open ? 'basic-menu' : undefined}
@@ -106,7 +111,7 @@ export default function Header(props){
                         aria-expanded={open ? 'true' : undefined}
                         onClick={handleClick}
                     >
-                        <Avatar variant='rounded' alt='Five night' src={avatar} />
+                        <Avatar variant='rounded' alt='Five night' src={avatar} className='avatar' />
                     </Button>
                     <Menu
                         id='basic-menu'
