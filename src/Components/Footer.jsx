@@ -1,13 +1,21 @@
 import { Box, Grid, Button, IconButton, Link, Divider } from '@mui/material';
+import { useState } from 'react'
 import { NavLink } from "react-router-dom";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import './Styles/Footer.css'
 
 
 export default function Footer(){
+    const [width, setWidth] = useState(window.innerWidth)
+
+    const width_window = () =>{
+        setWidth(window.innerWidth)
+    }
+    setInterval(width_window, 1000)
+
     return(
         <>
-            <Box width={'100%'} display={'flex'} justifyContent={'center'}>
+            <Box width={'95%'} display={'flex'} justifyContent={'center'}>
                 <Divider sx={{backgroundColor: '#252525', width: '90%'}} />
             </Box>
             <Box 
@@ -18,17 +26,17 @@ export default function Footer(){
                 color: '#fff'
             }}>
                 <Grid container xl={12} lg={12} md={12} xs={12} alignItems={'center'} className='grid_container_footer'>
-                    <Grid item xl={4} lg={4} md={4} xs={4} className='grid_logo'
+                    <Grid item xl={4} lg={4} md={4} xs={width > 450 ? 3 : 4} className='grid_logo'
                     sx={{textAlign: 'center'}}>
 
                         <Button 
                         sx={{color: 'red',
-                            fontSize: '1.3rem'}}>
+                            fontSize: width <= 800 ? '1rem' : '1.3rem'}}>
                             MOVIEFLIX
                         </Button>
 
                     </Grid>
-                    <Grid item container xl={4} lg={4} md={4} xs={4} className='grid_links'
+                    <Grid item container xl={4} lg={4} md={4} xs={width > 450 ? 6 : 4} className='grid_links'
                         justifyContent={'center'} 
                         alignItems={'center'} 
                         direction={'column'}>
@@ -52,15 +60,12 @@ export default function Footer(){
                                     <Button variant='text'>Filmes</Button>
                                 </NavLink>
 
-                                <NavLink to='/Bombando' className='grid_button_link'>
-                                    <Button variant='text'>Bombando</Button>
-                                </NavLink>
                             </div>
                                 
                         </Grid>
 
                     </Grid>
-                    <Grid item container xl={4} lg={4} md={4} xs={4} className='grid_social'
+                    <Grid item container xl={4} lg={4} md={4} xs={width > 450 ? 3 : 4} className='grid_social'
                         justifyContent={'space-evenly'} 
                         alignItems={'center'} 
                         direction={'column'}>
