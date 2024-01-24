@@ -38,7 +38,32 @@
     background-color: #252525;
     color: #fff;
 }
-
+.item_menu .avatar{
+    height: 80px;
+    width: 60px;
+    transition: all ease 0.4s;
+}
+.item_menu .avatar:hover{
+    transform: scale(1.1);
+    transition: all ease 0.4s;
+}
+.item_menu .grid_notification {
+    text-align: left;
+}
+.item_menu .grid_notification .title{
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    text-align: left;
+}
+.item_menu .grid_notification .name, .item_menu .grid_notification .release{
+    font-size: 0.7rem;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    color: #d6d6d6;
+    text-align: left;
+}
 @media(max-width: 600px){
     .header .container .grid .links,
     .header .container .search .button{
