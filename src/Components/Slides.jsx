@@ -123,11 +123,9 @@ export default function Slide_Movies(props){
                                 )}) : ''}
                                 
                     </ul>
-                    {arrow ?
+                    {arrow && width > 450 ?
                         <Box className='button' 
-                        sx={{top: 
-                            width < 450 ? '-110px' : 
-                            width >= 450 && width < 950 ? '-130px' : '-150px'}}>
+                        sx={{top: '-140px'}}>
                             <IconButton className='buttons' size='large' onClick={handleLeft}>
                                 <KeyboardArrowLeft fontSize='inherit' />
                             </IconButton>
