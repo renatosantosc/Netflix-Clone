@@ -12,21 +12,22 @@ import AddIcon from '@mui/icons-material/Add'
 
 export default function ViewMovie(){
 
-    const [dateMovie, setDateMovie] = useState(null)
-    const [castMovie, setCastMovie] = useState(null)
-    const [newCastMovie, setNewCastMovie] = useState(null)
-    const [castSeries, setCastSeries] = useState(null)
-    const [newCastSeries, setNewCastSeries] = useState(null)
-    const [recommendations, setRecommendations] = useState(null)
-    const [open, setOpen] = useState(false)
-    const [key, setKey] = useState(null)
-    const [release, setRelease] = useState(null)
-    const [releaseMovie, setReleaseMovie] = useState(null)
-    const [minute, setMinute] = useState(null)
-    const [hours, setHours] = useState(null)
-    const [found, setFound] = useState(null)
-    const [reload, setReload] = useState(null)
-    const [length, setLength] = useState(0)
+    const [dateMovie, setDateMovie] = useState(null) // state que captura os dados dos filmes e séries
+    const [castMovie, setCastMovie] = useState(null) // state que captura os dados dos casts dos filmes
+    const [newCastMovie, setNewCastMovie] = useState(null) // state que captura os dados do array específico dos casts
+    const [castSeries, setCastSeries] = useState(null) // state que captura os dados dos casts das séries
+    const [newCastSeries, setNewCastSeries] = useState(null) // state que captura os dados do array específico dos casts
+    const [recommendations, setRecommendations] = useState(null) // state das recomendações
+    const [open, setOpen] = useState(false) // state para abrir e fechar o modal
+    const [key, setKey] = useState(null) // chave do video (trailer)
+    const [release, setRelease] = useState(null) // data de lançamento do filme
+    const [releaseMovie, setReleaseMovie] = useState(null) // certificação de idade
+    const [minute, setMinute] = useState(null) // captura os minutos do filme
+    const [hours, setHours] = useState(null) // captura as horas do filme
+    const [found, setFound] = useState(null) // encontra a certificação BR
+    const [reload, setReload] = useState(null) // reload da página
+    const [length, setLength] = useState(0) // tamanho do array do state key
+    const [foundVideo, setFoundVideo] = useState({}) // array de videos (trailer)
     const imageURL = 'https://image.tmdb.org/t/p/original';
     const { id, name } = useParams()
 
@@ -108,6 +109,7 @@ export default function ViewMovie(){
         .then(function (response) {
             setKey(response.data)
             setLength(key.results.length)
+            setFoundVideo(key.results.find((item) => item.name === 'Trailer Oficial Dublado' || item.type === 'Trailer'))
         })
         .catch(function (error) {
         console.error(error);
@@ -152,7 +154,7 @@ export default function ViewMovie(){
         console.error(error);
         });
 
-      },[id, name, found, releaseMovie, dateMovie, castMovie, castSeries, recommendations, length, key])
+      },[id, name, found, releaseMovie, dateMovie, castMovie, castSeries, recommendations, length, key, foundVideo])
     return(
         <>
             <Box className='container'
@@ -239,7 +241,7 @@ export default function ViewMovie(){
                 : ''}
 
               </Box>
-                {key && open ? <Modal setOpen={setOpen} open={open} id={key.results[0].key} /> : ''}
+                {key && open ? <Modal setOpen={setOpen} open={open} id={foundVideo.key} /> : ''}
                 {dateMovie && reload === id ? <Footer /> : ''}
         </>
     )

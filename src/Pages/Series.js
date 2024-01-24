@@ -18,17 +18,18 @@ import '@fontsource/roboto/700.css'
 
 export default function Serie(){
 
-    const [trendingTV, setTrendingTV] = useState()
-    const [actionTV, setActionTV] = useState()
-    const [animationTV, setAnimationTV] = useState()
-    const [crimeTV, setCrimeTV] = useState()
-    const [fantasyTV, setFantasyTV] = useState()
-    const [back, setBack] = useState()
-    const [alt, setAlt] = useState()
-    const [open, setOpen] = useState(false)
-    const [videoURL, setVideoURL] = useState()
-    const [length, setLength] = useState(0)
-    const [idVideo, setIdVideo] = useState(null)
+    const [trendingTV, setTrendingTV] = useState() // Dados dos filmes em tedências
+    const [actionTV, setActionTV] = useState() // Dados dos filmes de ação
+    const [animationTV, setAnimationTV] = useState() // Dados dos filmes em animação
+    const [crimeTV, setCrimeTV] = useState() // Dados dos filmes de crime
+    const [fantasyTV, setFantasyTV] = useState() // Dados dos filmes de fantasia
+    const [back, setBack] = useState() // State que guarda a imagem do background
+    const [alt, setAlt] = useState() // State que guada a imagem do background alternativo para dispositivos móveis
+    const [open, setOpen] = useState(false) // State para abrir e fechar o modal
+    const [videoURL, setVideoURL] = useState() // State de todos os video 
+    const [length, setLength] = useState(0) // Olhar o tamanho do state videoURL
+    const [idVideo, setIdVideo] = useState(null) // key do video (trailer)
+    const [foundVideo, setFoundVideo] = useState({}) // Array de trailers
     const width = window.innerWidth
 
     const handleOpen = () =>{ setOpen(true) }
@@ -107,6 +108,7 @@ export default function Serie(){
         .then(function (response) {
           setVideoURL(response.data)
           setLength(videoURL.results.length)
+          setFoundVideo(videoURL.results.find((item) => item.name === 'Trailer Oficial Dublado' || item.type === 'Trailer'))
         })
         .catch(function (error) {
           console.error(error);
@@ -149,13 +151,13 @@ export default function Serie(){
           console.error(error);
         });
 
-    },[trendingTV, actionTV, animationTV, crimeTV, fantasyTV, videoURL, idVideo])
+    },[trendingTV, actionTV, animationTV, crimeTV, fantasyTV, videoURL, idVideo, foundVideo])
     return(
         <>
         <Box className='body' width={'100vw'} height={'85vh'} sx={{backgroundImage: width > 450 ? `url(${back})` : `url(${alt})`}}>
             <Header />
             {open ? 
-              <Modal setOpen={setOpen} open={open} id={videoURL.results[0].key} />
+              <Modal setOpen={setOpen} open={open} id={foundVideo.key} />
             : '' }
             {trendingTV && actionTV && animationTV && crimeTV && fantasyTV ? 
             <div className='title'>

@@ -19,14 +19,15 @@ import '@fontsource/roboto/700.css';
 
 export default function Home(){
 
-  const [dataMovie, setDataMovie] = useState()
-  const [discover, setDiscover] = useState()
-  const [back, setBack] = useState()
-  const [alt, setAlt] = useState()
-  const [open, setOpen] = useState(false)
-  const [videoURL, setVideoURL] = useState(null)
-  const [length, setLength] = useState(0)
-  const [idVideo, setIdVideo] = useState(null)
+  const [dataMovie, setDataMovie] = useState() // State dos filmes
+  const [discover, setDiscover] = useState() // State das séries
+  const [back, setBack] = useState() // State da imagem do background
+  const [alt, setAlt] = useState() // State da imagem do background alternativo para dispositivos móveis
+  const [open, setOpen] = useState(false) // State para abrir e fechar o modal
+  const [videoURL, setVideoURL] = useState() // State de todos os videos relacionado ao filme do background
+  const [length, setLength] = useState(0) // State para verificar o tamanho da state videoURL
+  const [idVideo, setIdVideo] = useState(null) // key do video do trailer
+  const [foundVideo, setFoundVideo] = useState({}) // State dos videos encontrados como trailer
   const width = window.innerWidth
 
   const handleOpen = () =>{ setOpen(true) }
@@ -77,6 +78,7 @@ export default function Home(){
     .then(function (response) {
       setVideoURL(response.data)
       setLength(videoURL.results.length)
+      setFoundVideo(videoURL.results.find((item) => item.name === 'Trailer Oficial Dublado' || item.type === 'Trailer'))
     })
     .catch(function (error) {
       console.error(error);
@@ -91,7 +93,7 @@ export default function Home(){
       console.error(error);
     });
 
-  },[dataMovie, discover, videoURL, idVideo])
+  },[dataMovie, discover, videoURL, idVideo, foundVideo])
 
     return(
       <>
@@ -101,7 +103,7 @@ export default function Home(){
             sx={{backgroundImage: width > 450 ? `url(${back})` : `url(${alt})`}}>
             <Header />
             {videoURL ? 
-              <Modal setOpen={setOpen} open={open} id={videoURL.results[0].key} />
+              <Modal setOpen={setOpen} open={open} id={foundVideo.key} />
             : '' }
             {dataMovie && back ? 
             <div className='title'>

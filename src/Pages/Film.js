@@ -17,17 +17,18 @@ import '@fontsource/roboto/700.css';
 
 export default function Film(){
 
-    const [nowPlaying, setNowPlaying] = useState()
-    const [actionMovie, setActionMovie] = useState()
-    const [romanceMovie, setRomanceMovie] = useState()
-    const [terrorMovie, setTerrorMovie] = useState()
-    const [fictionMovie, setFictionMovie] = useState()
-    const [back, setBack] = useState()
-    const [alt, setAlt] = useState()
-    const [open, setOpen] = useState(false)
-    const [videoURL, setVideoURL] = useState()
-    const [length, setLength] = useState(0)
-    const [idVideo, setIdVideo] = useState(null)
+    const [nowPlaying, setNowPlaying] = useState() // Filmes em lançamento
+    const [actionMovie, setActionMovie] = useState() // Filmes de ação
+    const [romanceMovie, setRomanceMovie] = useState() // Filmes de romance
+    const [terrorMovie, setTerrorMovie] = useState() // Filmes de terror
+    const [fictionMovie, setFictionMovie] = useState() // Filmes de ficção científica
+    const [back, setBack] = useState() // State do background
+    const [alt, setAlt] = useState() // State do background alternativo para dispositivos móveis
+    const [open, setOpen] = useState(false) // state para abrir e fechar o modal
+    const [videoURL, setVideoURL] = useState() // State de todos os videos relacionado ao background
+    const [length, setLength] = useState(0) // State para verificar o tamanho do state videoURL
+    const [idVideo, setIdVideo] = useState(null) // key do trailer
+    const [foundVideo, setFoundVideo] = useState({}) // State do video encontrado como trailer
     const width = window.innerWidth
 
     const handleOpen = () =>{ setOpen(true) }
@@ -106,6 +107,7 @@ export default function Film(){
         .then(function (response) {
           setVideoURL(response.data)
           setLength(videoURL.results.length)
+          setFoundVideo(videoURL.results.find((item) => item.name === 'Trailer Oficial Dublado' || item.type === 'Trailer'))
         })
         .catch(function (error) {
           console.error(error);
@@ -148,14 +150,14 @@ export default function Film(){
           console.error(error);
         });
 
-    },[nowPlaying, actionMovie, romanceMovie, terrorMovie, fictionMovie, videoURL, idVideo])
+    },[nowPlaying, actionMovie, romanceMovie, terrorMovie, fictionMovie, videoURL, idVideo, foundVideo])
 
     return(
         <>
         <Box className='body' width={'100vw'} height={'85vh'} sx={{backgroundImage: width > 450 ? `url(${back})` : `url(${alt})`}}>
             <Header />
             {open ? 
-              <Modal setOpen={setOpen} open={open} id={videoURL.results[0].key} />
+              <Modal setOpen={setOpen} open={open} id={foundVideo.key} />
             : '' }
             {nowPlaying && actionMovie && romanceMovie && terrorMovie && fictionMovie ? 
             <div className='title'>
