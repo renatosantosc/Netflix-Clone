@@ -7,9 +7,9 @@ import axios from 'axios'
 
 export default function Search(){
 
-    const [search, setSearch] = useState()
-    const [resultSearch, setResultSearch] = useState()
-    const [width, setWidth] = useState()
+    const [search, setSearch] = useState() // Valor do input
+    const [resultSearch, setResultSearch] = useState() // Resultado da requisição
+    const [width, setWidth] = useState() // State para capturar o tamanho da janela
     const imageURL = 'https://image.tmdb.org/t/p/original';
 
     const width_window = () =>{
@@ -55,7 +55,7 @@ export default function Search(){
                     sx={{
                         marginTop: 
                             width < 450 ? '25%' :
-                            width <= 450 && width > 520 ? '19%' : 
+                            width >= 450 && width < 520 ? '19%' : 
                             width >= 520 && width < 601 ? '16%' : 
                             width >= 601 && width < 720 ? '12%' : '9%',
                         color: '#fff'}}
